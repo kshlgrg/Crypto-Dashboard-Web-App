@@ -1,5 +1,7 @@
 # 🚀 Crypto Dashboard Web App
 
+https://kshlgrg.github.io/Crypto-Dashboard-Web-App/
+
 ## 📌 Overview
 
 The **Crypto Dashboard Web App** is a web-based application that displays real-time cryptocurrency data using a public API. It allows users to explore different cryptocurrencies, view key market statistics, and interact with the data through search, filtering, and sorting functionalities.
