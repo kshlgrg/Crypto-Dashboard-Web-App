@@ -72,3 +72,24 @@ function displayCoins(coins) {
 // ─── Start the app ─────────────────────────────────────
 
 fetchCoins();
+
+// ─── Search Functionality ──────────────────────────────
+
+const searchInput = document.getElementById("searchInput");
+
+// Listen for every keystroke in the search box
+searchInput.addEventListener("input", function () {
+  // Get what the user typed, in lowercase
+  const searchTerm = searchInput.value.toLowerCase();
+
+  // Use filter() to keep only coins whose name or symbol matches
+  const filtered = allCoins.filter((coin) => {
+    return (
+      coin.name.toLowerCase().includes(searchTerm) ||
+      coin.symbol.toLowerCase().includes(searchTerm)
+    );
+  });
+
+  // Re-render with only the matching coins
+  displayCoins(filtered);
+});
