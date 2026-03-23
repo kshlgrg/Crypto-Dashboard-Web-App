@@ -11,6 +11,29 @@ let allCoins = [];
 const coinsContainer = document.getElementById("coinsContainer");
 const loadingMsg = document.getElementById("loadingMsg");
 
+// ─── Favorites using localStorage ──────────────────────
+
+// Load saved favorites from localStorage (or start with empty array)
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+function isFav(coinId) {
+  return favorites.includes(coinId);
+}
+
+function toggleFavorite(coinId) {
+  if (isFav(coinId)) {
+    // Remove from favorites
+    favorites = favorites.filter((id) => id !== coinId);
+  } else {
+    // Add to favorites
+    favorites.push(coinId);
+  }
+  // Save updated list to localStorage
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+  // Re-render to update the star
+  applyFilters();
+}
+
 // ─── Fetch Data from API ───────────────────────────────
 
 async function fetchCoins() {
@@ -53,6 +76,9 @@ function displayCoins(coins) {
 
       return `
         <div class="coin-card">
+          <button class="fav-btn ${isFav(coin.id) ? "favorited" : ""}" onclick="toggleFavorite('${coin.id}')">
+            ${isFav(coin.id) ? "⭐" : "☆"}
+          </button>
           <img src="${coin.image}" alt="${coin.name}">
           <h3>${coin.name}</h3>
           <p class="symbol">${coin.symbol}</p>
@@ -154,4 +180,26 @@ btnLosers.addEventListener("click", function () {
   currentFilter = "losers";
   setActiveButton(btnLosers);
   applyFilters();
+});
+
+// ─── Dark Mode Toggle ──────────────────────────────────
+
+const darkModeToggle = document.getElementById("darkModeToggle");
+
+// Check if user previously chose dark mode
+if (localStorage.getItem("darkMode") === "on") {
+  document.body.classList.add("dark");
+  darkModeToggle.textContent = "☀️ Light Mode";
+}
+
+darkModeToggle.addEventListener("click", function () {
+  document.body.classList.toggle("dark");
+
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("darkMode", "on");
+    darkModeToggle.textContent = "☀️ Light Mode";
+  } else {
+    localStorage.setItem("darkMode", "off");
+    darkModeToggle.textContent = "🌙 Dark Mode";
+  }
 });

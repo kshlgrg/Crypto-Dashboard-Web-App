@@ -14,11 +14,25 @@ body {
   padding: 24px 16px;
 }
 
-/* ===== Title ===== */
-h1 {
-  text-align: center;
+/* ===== Header ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
+}
+
+h1 {
   font-size: 1.8rem;
+}
+
+#darkModeToggle {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
 }
 
 /* ===== Search Input ===== */
@@ -84,6 +98,22 @@ h1 {
   border-radius: 12px;
   padding: 16px;
   text-align: center;
+  position: relative;
+}
+
+.coin-card .fav-btn {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.4;
+}
+
+.coin-card .fav-btn.favorited {
+  opacity: 1;
 }
 
 .coin-card img {
@@ -127,4 +157,53 @@ h1 {
 
 .coin-card .change.red {
   color: #dc2626;
+}
+
+/* ===== Dark Mode ===== */
+body.dark {
+  background: #1a1a2e;
+  color: #e0e0e0;
+}
+
+body.dark #searchInput {
+  background: #16213e;
+  border-color: #333;
+  color: #e0e0e0;
+}
+
+body.dark .controls select {
+  background: #16213e;
+  border-color: #333;
+  color: #e0e0e0;
+}
+
+body.dark .controls button {
+  background: #16213e;
+  border-color: #333;
+  color: #e0e0e0;
+}
+
+body.dark .controls button.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: #fff;
+}
+
+body.dark #darkModeToggle {
+  background: #16213e;
+  border-color: #333;
+  color: #e0e0e0;
+}
+
+body.dark .coin-card {
+  background: #16213e;
+  border-color: #333;
+}
+
+body.dark .coin-card .symbol {
+  color: #aaa;
+}
+
+body.dark .coin-card .market-cap {
+  color: #999;
 }
