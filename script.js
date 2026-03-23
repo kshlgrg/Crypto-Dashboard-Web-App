@@ -73,23 +73,45 @@ function displayCoins(coins) {
 
 fetchCoins();
 
-// ─── Search Functionality ──────────────────────────────
+// ─── Grab references to controls ───────────────────────
 
 const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
 
-// Listen for every keystroke in the search box
-searchInput.addEventListener("input", function () {
-  // Get what the user typed, in lowercase
+// ─── Central function: apply search + sort together ────
+
+function applyFilters() {
   const searchTerm = searchInput.value.toLowerCase();
 
-  // Use filter() to keep only coins whose name or symbol matches
-  const filtered = allCoins.filter((coin) => {
+  // Step 1: SEARCH — filter by name or symbol
+  let result = allCoins.filter((coin) => {
     return (
       coin.name.toLowerCase().includes(searchTerm) ||
       coin.symbol.toLowerCase().includes(searchTerm)
     );
   });
 
-  // Re-render with only the matching coins
-  displayCoins(filtered);
-});
+  // Step 2: SORT — reorder based on dropdown selection
+  const sortValue = sortSelect.value;
+
+  result.sort((a, b) => {
+    if (sortValue === "price_asc") return (a.current_price ?? 0) - (b.current_price ?? 0);
+    if (sortValue === "price_desc") return (b.current_price ?? 0) - (a.current_price ?? 0);
+    if (sortValue === "market_cap_asc") return (a.market_cap ?? 0) - (b.market_cap ?? 0);
+    if (sortValue === "market_cap_desc") return (b.market_cap ?? 0) - (a.market_cap ?? 0);
+    if (sortValue === "name_asc") return a.name.localeCompare(b.name);
+    if (sortValue === "name_desc") return b.name.localeCompare(a.name);
+    return 0;
+  });
+
+  // Step 3: Render
+  displayCoins(result);
+}
+
+// ─── Event Listeners ───────────────────────────────────
+
+// Re-apply filters whenever the user types in search
+searchInput.addEventListener("input", applyFilters);
+
+// Re-apply filters whenever the user changes sort option
+sortSelect.addEventListener("change", applyFilters);
