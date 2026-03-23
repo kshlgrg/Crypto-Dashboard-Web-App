@@ -77,8 +77,14 @@ fetchCoins();
 
 const searchInput = document.getElementById("searchInput");
 const sortSelect = document.getElementById("sortSelect");
+const btnAll = document.getElementById("btnAll");
+const btnGainers = document.getElementById("btnGainers");
+const btnLosers = document.getElementById("btnLosers");
 
-// ─── Central function: apply search + sort together ────
+// Track which filter button is active: "all", "gainers", or "losers"
+let currentFilter = "all";
+
+// ─── Central function: apply search + filter + sort ────
 
 function applyFilters() {
   const searchTerm = searchInput.value.toLowerCase();
@@ -91,7 +97,14 @@ function applyFilters() {
     );
   });
 
-  // Step 2: SORT — reorder based on dropdown selection
+  // Step 2: FILTER — gainers or losers
+  if (currentFilter === "gainers") {
+    result = result.filter((coin) => (coin.price_change_percentage_24h ?? 0) > 0);
+  } else if (currentFilter === "losers") {
+    result = result.filter((coin) => (coin.price_change_percentage_24h ?? 0) < 0);
+  }
+
+  // Step 3: SORT — reorder based on dropdown selection
   const sortValue = sortSelect.value;
 
   result.sort((a, b) => {
@@ -104,14 +117,41 @@ function applyFilters() {
     return 0;
   });
 
-  // Step 3: Render
+  // Step 4: Render
   displayCoins(result);
+}
+
+// ─── Helper: set active button styling ─────────────────
+
+function setActiveButton(activeBtn) {
+  // Remove "active" class from all buttons
+  btnAll.classList.remove("active");
+  btnGainers.classList.remove("active");
+  btnLosers.classList.remove("active");
+
+  // Add "active" class to the clicked button
+  activeBtn.classList.add("active");
 }
 
 // ─── Event Listeners ───────────────────────────────────
 
-// Re-apply filters whenever the user types in search
 searchInput.addEventListener("input", applyFilters);
-
-// Re-apply filters whenever the user changes sort option
 sortSelect.addEventListener("change", applyFilters);
+
+btnAll.addEventListener("click", function () {
+  currentFilter = "all";
+  setActiveButton(btnAll);
+  applyFilters();
+});
+
+btnGainers.addEventListener("click", function () {
+  currentFilter = "gainers";
+  setActiveButton(btnGainers);
+  applyFilters();
+});
+
+btnLosers.addEventListener("click", function () {
+  currentFilter = "losers";
+  setActiveButton(btnLosers);
+  applyFilters();
+});
