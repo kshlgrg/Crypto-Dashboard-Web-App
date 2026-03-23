@@ -1,0 +1,130 @@
+/* ===== Reset & Base ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f4f6f8;
+  color: #333;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* ===== Title ===== */
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+}
+
+/* ===== Search Input ===== */
+#searchInput {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 14px;
+}
+
+/* ===== Controls Row ===== */
+.controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.controls select {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.controls button {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.controls button.active {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+}
+
+/* ===== Loading Message ===== */
+#loadingMsg {
+  text-align: center;
+  color: #888;
+  margin: 40px 0;
+  display: none; /* hidden by default, shown via JS */
+}
+
+/* ===== Coins Grid ===== */
+#coinsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+/* ===== Individual Coin Card ===== */
+.coin-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.coin-card img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+}
+
+.coin-card h3 {
+  font-size: 1rem;
+  margin-bottom: 4px;
+}
+
+.coin-card .symbol {
+  color: #888;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.coin-card .price {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.coin-card .market-cap {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.coin-card .change {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.coin-card .change.green {
+  color: #16a34a;
+}
+
+.coin-card .change.red {
+  color: #dc2626;
+}

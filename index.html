@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>🪙 Crypto Dashboard</h1>
+
+  <!-- Search Bar -->
+  <input
+    type="text"
+    id="searchInput"
+    placeholder="Search by name or symbol..."
+  >
+
+  <!-- Controls: Sort Dropdown + Filter Buttons -->
+  <div class="controls">
+
+    <select id="sortSelect">
+      <option value="market_cap_desc">Market Cap (High → Low)</option>
+      <option value="market_cap_asc">Market Cap (Low → High)</option>
+      <option value="price_desc">Price (High → Low)</option>
+      <option value="price_asc">Price (Low → High)</option>
+      <option value="name_asc">Name (A → Z)</option>
+      <option value="name_desc">Name (Z → A)</option>
+    </select>
+
+    <button id="btnAll" class="active">All</button>
+    <button id="btnGainers">Gainers</button>
+    <button id="btnLosers">Losers</button>
+
+  </div>
+
+  <!-- Loading Message -->
+  <p id="loadingMsg">Loading coins...</p>
+
+  <!-- Container where coin cards will appear -->
+  <div id="coinsContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
