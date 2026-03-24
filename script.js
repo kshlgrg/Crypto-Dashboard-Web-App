@@ -1,5 +1,28 @@
 // ===== script.js — Crypto Dashboard =====
 
+// ─── Debounce: delays execution until user stops typing ─
+// If called again within 'delay' ms, the timer resets
+function debounce(func, delay) {
+  let timerId;
+  return function (...args) {
+    clearTimeout(timerId);
+    timerId = setTimeout(() => func.apply(this, args), delay);
+  };
+}
+
+// ─── Throttle: limits how often a function can run ──────
+// Once called, the function won't fire again for 'limit' ms
+function throttle(func, limit) {
+  let lastCall = 0;
+  return function (...args) {
+    const now = Date.now();
+    if (now - lastCall >= limit) {
+      lastCall = now;
+      func.apply(this, args);
+    }
+  };
+}
+
 // API URL — fetches top coins in USD
 const API_URL =
   "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd";
@@ -161,25 +184,31 @@ function setActiveButton(activeBtn) {
 
 // ─── Event Listeners ───────────────────────────────────
 
-searchInput.addEventListener("input", applyFilters);
+// Debounce search — waits 300ms after user stops typing
+const debouncedFilter = debounce(applyFilters, 300);
+searchInput.addEventListener("input", debouncedFilter);
+
 sortSelect.addEventListener("change", applyFilters);
+
+// Throttle button clicks — max once per 300ms
+const throttledApply = throttle(applyFilters, 300);
 
 btnAll.addEventListener("click", function () {
   currentFilter = "all";
   setActiveButton(btnAll);
-  applyFilters();
+  throttledApply();
 });
 
 btnGainers.addEventListener("click", function () {
   currentFilter = "gainers";
   setActiveButton(btnGainers);
-  applyFilters();
+  throttledApply();
 });
 
 btnLosers.addEventListener("click", function () {
   currentFilter = "losers";
   setActiveButton(btnLosers);
-  applyFilters();
+  throttledApply();
 });
 
 // ─── Dark Mode Toggle ──────────────────────────────────
