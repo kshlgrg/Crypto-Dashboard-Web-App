@@ -6,12 +6,13 @@
 }
 
 body {
-  font-family: "Segoe UI", Arial, sans-serif;
-  background: #f4f6f8;
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  background: #f0f2f5;
   color: #333;
-  max-width: 960px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 24px 16px;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* ===== Header ===== */
@@ -19,30 +20,47 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 h1 {
   font-size: 1.8rem;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 #darkModeToggle {
   padding: 8px 14px;
   font-size: 0.9rem;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   background: #fff;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#darkModeToggle:hover {
+  background: #f3f4f6;
+  transform: translateY(-1px);
 }
 
 /* ===== Search Input ===== */
 #searchInput {
   width: 100%;
-  padding: 10px 14px;
+  padding: 12px 16px;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  border: 2px solid #e5e7eb;
+  border-radius: 10px;
   margin-bottom: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#searchInput:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 /* ===== Controls Row ===== */
@@ -56,32 +74,59 @@ h1 {
 .controls select {
   padding: 8px 12px;
   font-size: 0.9rem;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.controls select:hover {
+  border-color: #3b82f6;
 }
 
 .controls button {
   padding: 8px 16px;
   font-size: 0.9rem;
-  border: 1px solid #ccc;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   background: #fff;
   cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.controls button:hover {
+  background: #f3f4f6;
+  transform: translateY(-1px);
 }
 
 .controls button.active {
-  background: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
   color: #fff;
-  border-color: #3b82f6;
+  border-color: transparent;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
 }
 
-/* ===== Loading Message ===== */
+/* ===== Loading Spinner ===== */
 #loadingMsg {
   text-align: center;
   color: #888;
-  margin: 40px 0;
-  display: none; /* hidden by default, shown via JS */
+  margin: 60px 0;
+  display: none;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 12px auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* ===== Coins Grid ===== */
@@ -94,22 +139,34 @@ h1 {
 /* ===== Individual Coin Card ===== */
 .coin-card {
   background: #fff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px 16px;
   text-align: center;
   position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.coin-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .coin-card .fav-btn {
   position: absolute;
-  top: 8px;
-  right: 10px;
+  top: 10px;
+  right: 12px;
   background: none;
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
-  opacity: 0.4;
+  opacity: 0.35;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.coin-card .fav-btn:hover {
+  opacity: 0.7;
+  transform: scale(1.2);
 }
 
 .coin-card .fav-btn.favorited {
@@ -117,93 +174,184 @@ h1 {
 }
 
 .coin-card img {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 8px;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 10px;
 }
 
 .coin-card h3 {
   font-size: 1rem;
-  margin-bottom: 4px;
+  font-weight: 600;
+  margin-bottom: 2px;
 }
 
 .coin-card .symbol {
-  color: #888;
-  font-size: 0.85rem;
+  color: #9ca3af;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  margin-bottom: 8px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
 }
 
 .coin-card .price {
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1.15rem;
+  font-weight: 700;
   margin-bottom: 4px;
 }
 
 .coin-card .market-cap {
-  font-size: 0.8rem;
-  color: #666;
-  margin-bottom: 4px;
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin-bottom: 6px;
 }
 
 .coin-card .change {
   font-size: 0.85rem;
   font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  display: inline-block;
 }
 
 .coin-card .change.green {
   color: #16a34a;
+  background: rgba(22, 163, 74, 0.08);
 }
 
 .coin-card .change.red {
   color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+}
+
+/* ===== Pagination ===== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding: 16px 0;
+}
+
+.pagination button {
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+  background: #3b82f6;
+  color: #fff;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 500;
 }
 
 /* ===== Dark Mode ===== */
 body.dark {
-  background: #1a1a2e;
-  color: #e0e0e0;
+  background: #0f172a;
+  color: #e2e8f0;
 }
 
 body.dark #searchInput {
-  background: #16213e;
-  border-color: #333;
-  color: #e0e0e0;
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark #searchInput:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 body.dark .controls select {
-  background: #16213e;
-  border-color: #333;
-  color: #e0e0e0;
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
 }
 
 body.dark .controls button {
-  background: #16213e;
-  border-color: #333;
-  color: #e0e0e0;
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark .controls button:hover {
+  background: #334155;
 }
 
 body.dark .controls button.active {
-  background: #3b82f6;
-  border-color: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  border-color: transparent;
   color: #fff;
 }
 
 body.dark #darkModeToggle {
-  background: #16213e;
-  border-color: #333;
-  color: #e0e0e0;
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark #darkModeToggle:hover {
+  background: #334155;
 }
 
 body.dark .coin-card {
-  background: #16213e;
-  border-color: #333;
+  background: #1e293b;
+  border-color: #334155;
+}
+
+body.dark .coin-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
 }
 
 body.dark .coin-card .symbol {
-  color: #aaa;
+  color: #94a3b8;
 }
 
 body.dark .coin-card .market-cap {
-  color: #999;
+  color: #94a3b8;
+}
+
+body.dark .coin-card .change.green {
+  background: rgba(22, 163, 74, 0.15);
+}
+
+body.dark .coin-card .change.red {
+  background: rgba(220, 38, 38, 0.15);
+}
+
+body.dark .pagination button {
+  background: #1e293b;
+  border-color: #334155;
+  color: #e2e8f0;
+}
+
+body.dark .pagination button:hover:not(:disabled) {
+  background: #6366f1;
+  border-color: #6366f1;
+}
+
+body.dark .pagination span {
+  color: #94a3b8;
+}
+
+body.dark .spinner {
+  border-color: #334155;
+  border-top-color: #6366f1;
 }
