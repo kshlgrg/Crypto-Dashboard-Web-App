@@ -129,9 +129,17 @@ const sortSelect = document.getElementById("sortSelect");
 const btnAll = document.getElementById("btnAll");
 const btnGainers = document.getElementById("btnGainers");
 const btnLosers = document.getElementById("btnLosers");
+const prevPageBtn = document.getElementById("prevPage");
+const nextPageBtn = document.getElementById("nextPage");
+const pageInfo = document.getElementById("pageInfo");
 
 // Track which filter button is active: "all", "gainers", or "losers"
 let currentFilter = "all";
+
+// ─── Pagination state ──────────────────────────────────
+const COINS_PER_PAGE = 10;
+let currentPage = 1;
+let filteredCoins = []; // stored so pagination can access it
 
 // ─── Central function: apply search + filter + sort ────
 
@@ -166,8 +174,33 @@ function applyFilters() {
     return 0;
   });
 
-  // Step 4: Render
-  displayCoins(result);
+  // Step 4: Store results + reset to page 1
+  filteredCoins = result;
+  currentPage = 1;
+  renderPage();
+}
+
+// ─── Pagination: render a specific page of coins ────────
+
+function renderPage() {
+  const totalPages = Math.max(1, Math.ceil(filteredCoins.length / COINS_PER_PAGE));
+
+  // Clamp currentPage
+  if (currentPage < 1) currentPage = 1;
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  // Slice the coins for this page
+  const start = (currentPage - 1) * COINS_PER_PAGE;
+  const pageCoins = filteredCoins.slice(start, start + COINS_PER_PAGE);
+
+  displayCoins(pageCoins);
+
+  // Update page info text
+  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
+
+  // Disable/enable buttons at boundaries
+  prevPageBtn.disabled = currentPage === 1;
+  nextPageBtn.disabled = currentPage === totalPages;
 }
 
 // ─── Helper: set active button styling ─────────────────
@@ -209,6 +242,19 @@ btnLosers.addEventListener("click", function () {
   currentFilter = "losers";
   setActiveButton(btnLosers);
   throttledApply();
+});
+
+// Pagination buttons
+prevPageBtn.addEventListener("click", function () {
+  currentPage--;
+  renderPage();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+
+nextPageBtn.addEventListener("click", function () {
+  currentPage++;
+  renderPage();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
 // ─── Dark Mode Toggle ──────────────────────────────────
